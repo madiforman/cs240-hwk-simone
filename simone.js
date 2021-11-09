@@ -1,18 +1,17 @@
 /* Simone Game */
 /* Author: Madison Sanchez-Forman | Version: */
 class Buttons {
-    constructor(elem, s){
+    constructor(elem, file){
     this.element = document.getElementById(elem);
-    this.sound = s;
-
+    this.sound = file;
     }
     playSoundFx(){
     var sound = new Audio(this.sound);
      sound.play();
     }
     getElement(){
-        return this.element;
-    }
+        return this.element; 
+     }
     changeColor(boolean, color){
         if(boolean == true) {
         this.element.className = "light" + color;
@@ -22,48 +21,54 @@ class Buttons {
     addHoverBorder(){
     this.element.classList.add("hover");
     }
-    // removeHoverBorder(){
-    //     this.element.classList.remove("hover");
-    // }
 
 }
-var red = new Buttons("redSq","sounds/red.wav");
-var yellow = new Buttons ("yellowSq", "sounds/yellow.wav");
-var blue = new Buttons ("blueSq", "sounds/blue.wav");
-var green = new Buttons ("greenSq", "sounds/green.wav");
-var playButton = document.getElementById("play")
-var arr = [red,green,yellow,blue];
-addButtonEventListeners(red, "red");
-addButtonEventListeners(yellow, "yellow");
-addButtonEventListeners(blue, "blue");
-addButtonEventListeners(green, "green");
-let startSequence = ["G","R","Y","Y","B","B","R","B","Y","Y","G","G"]
+var R = new Buttons("redSq","sounds/red.wav");
+var Y = new Buttons ("yellowSq", "sounds/yellow.wav");
+var B = new Buttons ("blueSq", "sounds/blue.wav");
+var G = new Buttons ("greenSq", "sounds/green.wav");
+var playButton = document.getElementById("play");
+var startSequence = ["G","R","Y","Y","B","B","R","B","Y","Y","G","G"];
+const  START = 120;
 
-function playSequence(pattern){
- for(let i = 0; i < pattern.length; i++){
-     if(pattern[i] == "R"){
-         red.changeColor(true,"red");
-         //red.changeColor(false,"red");
-         setTimeout(120);
-     }else if(pattern[i] == "G"){
-        green.changeColor(true,"green");
-       // green.changeColor(false,"green");
-        setTimeout(120);
-    }else if(pattern[i] == "B"){
-        blue.changeColor(true,"blue");
-       // blue.changeColor(false,"blue");
-        setTimeout(120);
-    }else if(pattern[i] == "Y"){
-        yellow.changeColor(true,"yellow");
-       // yellow.changeColor(false,"yellow");
-        setTimeout(120);
-
+async function playSequence(pattern){
+for(let i = 0; i < pattern.length; i++){
+    await sleep(START);
+    if(pattern[i] == "R"){
+    R.changeColor(true, "red");
+    R.playSoundFx();
+    await sleep(START);
+    R.changeColor(false, "red");
     }
+    if(pattern[i] == "G"){
+    G.changeColor(true, "green");
+    G.playSoundFx();
+    await sleep(START);
+    G.changeColor(false, "green");
+        }
+    if(pattern[i] == "B"){
+    B.changeColor(true, "blue");
+    B.playSoundFx();
+    await sleep(START);
+    B.changeColor(false, "blue");
+        }
+    if(pattern[i] == "Y"){
+    Y.changeColor(true, "yellow");
+    Y.playSoundFx();
+    await sleep(START);
+    Y.changeColor(false, "yellow");
+    } 
 }
+}
+ function sleep(d){
+    return new Promise((resolve)=> setTimeout(resolve, d));
 }
 playButton.addEventListener("click", function(){
-   var r = parseInt(document.getElementById("rounds").innerHTML);
-   playSequence(startSequence);
+    addButtonEventListeners(R, "red");
+    addButtonEventListeners(Y, "yellow");
+    addButtonEventListeners(B, "blue");
+    addButtonEventListeners(G, "green");
+    playSequence(startSequence);
 })
 function addButtonEventListeners(button, color){
     button.getElement().addEventListener("mousedown", function(){
