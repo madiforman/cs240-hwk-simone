@@ -12,8 +12,9 @@ class Buttons {
     getElement(){
         return this.element; 
      }
-    changeColor(boolean, color){
-        if(boolean == true) {
+    changeColor(int, color){
+
+        if(int == 1) {
         this.element.className = "light" + color;
         } else {
             this.element.className = color;
@@ -30,33 +31,35 @@ var G = new Buttons ("greenSq", "sounds/green.wav");
 var playButton = document.getElementById("play");
 var startSequence = ["G","R","Y","Y","B","B","R","B","Y","Y","G","G"];
 const  START = 120;
+//TO DO
+// maybe make a Simone class? was super helpful with the buttons
 
 async function playSequence(pattern){
 for(let i = 0; i < pattern.length; i++){
     await sleep(START);
     if(pattern[i] == "R"){
-    R.changeColor(true, "red");
     R.playSoundFx();
+    R.changeColor(1, "red");
     await sleep(START);
-    R.changeColor(false, "red");
+    R.changeColor(0, "red");
     }
     if(pattern[i] == "G"){
-    G.changeColor(true, "green");
     G.playSoundFx();
+    G.changeColor(1, "green");
     await sleep(START);
-    G.changeColor(false, "green");
+    G.changeColor(0, "green");
         }
-    if(pattern[i] == "B"){
-    B.changeColor(true, "blue");
+    if(pattern[i] == "B"){    
     B.playSoundFx();
+    B.changeColor(1, "blue");
     await sleep(START);
-    B.changeColor(false, "blue");
+    B.changeColor(0, "blue");
         }
     if(pattern[i] == "Y"){
-    Y.changeColor(true, "yellow");
     Y.playSoundFx();
+    Y.changeColor(1, "yellow");
     await sleep(START);
-    Y.changeColor(false, "yellow");
+    Y.changeColor(0, "yellow");
     } 
 }
 }
