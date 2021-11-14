@@ -57,26 +57,9 @@ const  MAIN_DELAY = 400;
 // maybe make a Simone class? was super helpful with the buttons
 var start_sequence = ["G","R","Y","Y","B","B","R","B","Y","Y","G","G"];
 
-var red = new Buttons("redSq","sounds/red.wav");
-var blue = new Buttons("blueSq", "sounds/blue.wav");
-var green = new Buttons("greenSq", "sounds/green.wav");
-var yellow = new Buttons("yellowSq", "sounds/yellow.wav");
-class Simone {
-constructor() {
-        this.add_button_event_listeners(red, "red");
-        this.add_button_event_listeners(yellow, "yellow");
-        this.add_button_event_listeners(blue, "blue");
-        this.add_button_event_listeners(green, "green");  
-    }
-add_button_event_listeners(button, color){
-        button.getElement().addEventListener("mousedown", function(){
-          button.changeColor(1, color);
-          })
-          button.getElement().addEventListener("mouseup",function(){
-              button.changeColor(0, color);
-              button.playSoundFx();
-              if(computer_turn == false && active_game == true){
-                  position++;
+function user_turn(button){
+    user_response.push(button.get_string_rep());
+    position++;
                   user_response.push(button.get_string_rep());
                   console.log(user_response);
                   console.log(is_correct());
