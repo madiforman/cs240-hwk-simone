@@ -1,5 +1,7 @@
 /* Simone Game */
 /* Author: Madison Sanchez-Forman | Version: */
+//TO DO: GET API TO WORK
+const axios = require('axios');
 class Buttons {
     constructor(elem, file){
     this.element = document.getElementById(elem);
@@ -22,24 +24,27 @@ add_hover_border(){
 }
 string_representation(){
     if (this.element.className.includes("red")){
-        return "R";
+        return 'R';
     } else if (this.element.className.includes("yellow")){
-        return "Y";
+        return 'Y';
     } else if (this.element.className.includes("green")){
-        return "G";
+        return 'G';
     } else if (this.element.className.includes("blue")){
-        return "B";
+        return 'B';
     }
 }
 }
-var current_level = 1, total_rounds, user_response = [], solution, position = 0, computer_turn = true;
-var start_sequence = ["G","R","Y","Y","B","B","R","B","Y","Y","G","G"];
+const API = "http://cs.pugetsound.edu/~dchiu/cs240/api/simone/";
+var current_level = 1, total_rounds, user_response = [], position = 0, computer_turn = true;
 var playButton = document.getElementById("play"), rounds = document.getElementById("rounds"), display_status = document.getElementById("status");
 
 var red = new Buttons("redSq","sounds/red.wav"),
 blue = new Buttons("blueSq", "sounds/blue.wav"),
 green = new Buttons("greenSq", "sounds/green.wav"),
 yellow = new Buttons("yellowSq", "sounds/yellow.wav");
+
+
+
 playButton.addEventListener("click", function(){
     total_rounds = parseInt(rounds.value);
     add_button_event_listeners(red, "red");
@@ -49,7 +54,31 @@ playButton.addEventListener("click", function(){
     next_round();
 
 });
-
+async function request_start(){
+ 
+    let data = {
+        type: {"start": "sequence"}  };
+    try {
+    let response = await axios.get(API + "?cmd=start");
+    var start_sequence = response.data.sequence;
+    console.log(start_sequence);
+    return start_sequence;
+    } catch(err){
+        console.log("error: " + err);
+    }
+ }
+ async function request_round(){
+    let data = {
+                type: {"solution": "key"}  };
+            try {
+             let response = await axios.get(API + "?cmd=getSolution&rounds=" + current_level);
+             var solution = response.data.key;
+             console.log(solution);
+             return(solution);
+            } catch(err){
+                console.log("error " + err);
+            }
+ }
 function end_game(win_or_lose){
     if(win_or_lose == "win"){
     document.body.style.backgroundColor = "DeepSkyBlue";
@@ -80,36 +109,34 @@ function is_correct(){
 }
 async function next_round(){
 if (current_level == 1){
-await play_pattern(start_sequence, 120);    
+play_pattern(await request_start(), 120);    
 await sleep(4000);    
 }
-solution = get_next_pattern(current_level);
+solution = (await request_round());
 console.log(solution);
 user_response = [];
 play_pattern(solution, 400);
 computer_turn = false;
-
-    
 }
 async function play_pattern(pattern, d){
     for(let i = 0; i < pattern.length; i++){
             await sleep(d); 
-            if(pattern[i] == "G"){
+            if(pattern[i] == 'G'){
             green.play_soundfx();
             green.change_color(1, "green");
             await sleep(d);
             green.change_color(0, "green");
-            } if(pattern[i] == "R"){
+            } if(pattern[i] == 'R'){
             red.play_soundfx();
             red.change_color(1, "red");
             await sleep(d);
             red.change_color(0, "red");
-            } if(pattern[i] == "Y"){
+            } if(pattern[i] == 'Y'){
             yellow.play_soundfx();
             yellow.change_color(1, "yellow");
             await sleep(d);
             yellow.change_color(0, "yellow");
-            } if(pattern[i] == "B"){    
+            } if(pattern[i] == 'B'){    
             blue.play_soundfx();
             blue.change_color(1, "blue");
             await sleep(d);
@@ -167,3 +194,4 @@ function add_button_event_listeners(button, color){
           })
           
 }
+
