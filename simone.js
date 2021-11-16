@@ -71,7 +71,7 @@ user_response = [], //will store the user's response
 computer_turn = true; //is it the users' turn?
 
 var play_button = document.getElementById("play"), //button that will instantiate game
-rounds = document.getElementById("rounds"),//number of rounds the user wants to play
+rounds = document.getElementById("rounds"), //number of rounds the user wants to play
 display_status = document.getElementById("status");//where the status of the game will be displayed to the user
 
 var red = new Buttons("redSq","sounds/red.wav"), //create button objects, wont respond to clicks yet 
