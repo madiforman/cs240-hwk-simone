@@ -81,12 +81,18 @@ yellow = new Buttons("yellowSq", "sounds/yellow.wav");
 
 play_button.addEventListener("click", function(){ //if the start button is clicked
     total_rounds = parseInt(rounds.value); //get the # of rounds to be played
+    if(isNaN(total_rounds)){ //if what the user entered cant be coverted to a number
+    display_status.innerHTML = "I don't think you entered a number, reload your page and try again.";
+    } else if(total_rounds <= 0){ //if what the user enterted is negative or == 0
+    display_status.innerHTML = "The fewest number of rounds you can play is 1, reload your page and try again.";
+    }
+    else {
     add_button_event_listeners(red, "red"); //give buttons funtionality
     add_button_event_listeners(blue, "blue");
     add_button_event_listeners(green, "green");
     add_button_event_listeners(yellow, "yellow");
-    next_round(); //start round 1
-
+    next_round(); //start round 1   
+    }
 });
 /**
  * request_start() Will send a request to the API provided, specifically for a randomized starting sequence 
