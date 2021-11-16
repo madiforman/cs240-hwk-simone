@@ -128,11 +128,10 @@ async function request_start(){
  /**
   * next_round() - Will get called after the user answers each round (assuming response was correct).
   * If its the first round of the game, it will begin by playing requesting the starting sequence (request_start()),
-  * if not it will call request_round() to get the next solution and await its response (which is why its asynch). 
+  * if not it will call request_round() to get the next solution and await its response (which is why its async). 
   * If its the first round the opening sequence will be played(with a 120 ms delay in between each button), 
   * and then a delay of 40000 ms will follow. If its not the first round it will clear the user's previous response, 
   * play the next round's solution (with a 400 ms delay in between each button), and finally change it to the users turn. 
-  * 
   */
 async function next_round(){
 if (current_level == 1){ //if game is starting play start sequence
