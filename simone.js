@@ -67,6 +67,11 @@ async function request_start(){
         console.log("error: " + err);
     }
  }
+ /**
+  * request_round() Will send a request to the API provided, specifically for a randomized solution
+  * for the current level of the game
+  * @returns solution - pattern that will be played to the user, and then matched against the users response
+  */
  async function request_round(){
     let data = {
                 type: {"solution": "key"}  };
