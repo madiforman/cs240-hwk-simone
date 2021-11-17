@@ -1,7 +1,7 @@
 /* Simone Game */ 
 /* Author: Madison Sanchez-Forman | Version: November 15, 2021 */
- 
 const axios = require('axios'); //import axios library
+ /************************************************************************************/
 class Buttons {
     /**
      * Button class for 4 colors on the board of the game. 
@@ -64,6 +64,7 @@ char_representation(){
     }
 }
 }
+/************************************************************************************/
 const API = "http://cs.pugetsound.edu/~dchiu/cs240/api/simone/"; //axios library url
 var current_level = 1, //game starts at level 1
 total_rounds, //will hold the value of rounds element
@@ -78,7 +79,7 @@ var red = new Buttons("redSq","sounds/red.wav"), //create button objects, wont r
 blue = new Buttons("blueSq", "sounds/blue.wav"),
 green = new Buttons("greenSq", "sounds/green.wav"),
 yellow = new Buttons("yellowSq", "sounds/yellow.wav");
-
+/***********************************************************q*************************/
 play_button.addEventListener("click", function(){ //if the start button is clicked
     total_rounds = parseInt(rounds.value); //get the # of rounds to be played
     if(isNaN(total_rounds)){ //if what the user entered cant be coverted to a number
@@ -94,6 +95,7 @@ play_button.addEventListener("click", function(){ //if the start button is click
     next_round(); //start round 1   
     }
 });
+/************************************************************************************/
 /**
  * request_start() Will send a request to the API provided, specifically for a randomized starting sequence 
  * @returns start_sequence - sequence played at the beginning of the game
